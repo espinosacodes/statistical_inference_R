@@ -113,7 +113,10 @@ print(paste("El valor del intercepto es menor al nivel de significancia tomado c
 #______________________________________________________________________________________________________________________________________________________________
 
 #f. Plantee y desarrolle la prueba de hipótesis de linealidad del modelo.
-
+summary(modelo)
+anova(modelo)
+#TAREA: Interpretar correctamente la prueba de hipotesis
+# sobre la linealidad del modelo
 
 # Instalar y cargar el paquete gvlma si aún no está instalado
 if (!require(gvlma)) {
@@ -131,9 +134,14 @@ print("Como el valor P es < 0.05 se concluye que el modelo no es lineal en los p
 #______________________________________________________________________________________________________________________________________________________________
 
 #g. Determine e interprete adecuadamente el coeficiente de determinación del modelo.
+# de determinación del modelo.
+#R^2
+#cor(volumen, tiempo_segundos)^2 #Coeficiente de correlación
 
+analisis_var=anova(modelo)
+analisis_var$`Sum Sq`[1]/(sum(analisis_var$`Sum Sq`))
 
-print(paste("Coeficiente de determinación (R²): ", pruebas_hipotesis$r.squared))
+print(paste("Coeficiente de determinación (R²): ", pruebas_hipotesis$r.squared))#coeficiente de correlacion
 print(paste("Ya que se tiene un coeficiente de determinacion mas cercano a 1, se concluye que 
             una gran proporción de la variabilidad en la variable dependiente es predecible a 
             partir de la variable independiente"))
@@ -143,15 +151,52 @@ print(paste("Ya que se tiene un coeficiente de determinacion mas cercano a 1, se
 #h. Plantee la hipótesis y compruebe cada uno de los supuestos del modelo de regresión.
 
 
-# Hipótesis:
-# H0: El modelo no es significativo, es decir, todos los coeficientes son cero. H_0 == 0
-# H1: Al menos uno de los coeficientes no es cero, es decir, el modelo es significativo. H_1 != 0
 
-print(paste("P valor del modelo: ", summary(modelo)$fstatistic[1]))
+# 1. NORMALIDAD de los errores
+# H_0: Los e_i tiene distribución normal
+# H_1: Los e_i NO tienen distribución normal
 
-#FALTA HACER PARA ESTEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
-#EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE!!!!!!!!!!!11
-#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
+#Kolgomorov-Smornov
+residuales=rstandard(modelo)
+ks.test(residuales,"pnorm")
+# p-value = 0.3555 > alpha=0.05
+#Shapiro-Wilk
+shapiro.test(residuales)
+# p-value = 0.001783 < alpha=0.05
+
+#Encontramos que con la prueba kolgomorov smirnov no 
+#rechazamos la hipotesis de normalidad, sin embargo,
+#con la prueba shapiro wilk rechazamos la hipotesis de
+#normalidad, por tanto, concluiremos que el supuesto
+#de normalidad de los errores no se está cumpliendo
+#en este modelo
+
+# 2.  Independenia de los errores
+#     H_0: Los errores son independientes
+#     H_1: Los errores NO son independientes
+if (!require(car)) {
+  install.packages("car")
+  library(car)
+}
+
+durbinWatsonTest(modelo)
+# Valor p = 0.352> alpha = 0.05
+# No rechazamos la hipotesis que plantea que los
+# errores son independientes.
+
+# 3. Homocedasticidad
+# H_0: Var(e_i)==0
+# H_1: Var(e_i)!=0
+if (!require(lmtest)) {
+  install.packages("lmtest")
+  library(lmtest)
+}
+bptest(modelo)
+#p-value = 0.7987 alpha = 0.05
+#No hay evidencia suficiente para rechazar H_0
+# se cumple el supuesto de homocedasticidad
+
+
 
 #______________________________________________________________________________________________________________________________________________________________
 
@@ -161,12 +206,20 @@ print(paste("P valor del modelo: ", summary(modelo)$fstatistic[1]))
 #(Pista: Calcule intervalos de predicción para los valores estimados y observe si los valores observados están dentro de los intervalos de predicción)
 
 
-# Tus nuevos datos
+# Your new data
 nuevos_datos <- data.frame(tiempo_segundos = c(750, 950, 1200))
 
-# Predicciones del modelo
+# Predictions from the model
 predicciones <- predict(modelo, newdata = nuevos_datos, interval = "prediction")
+
+# Actual oxygen consumption values
+consumo_real <- c(43.5, 51.8, 27.5)
+
+print(predicciones)
+
 
 
 #______________________________________________________________________________________________________________________________________________________________
 #j. Considera que el modelo sirve para estimar el consumo de oxígeno en los deportistas? Justifique su respuesta basada en los resultados obtenidos.
+
+print(paste("el modelo proporciona una herramienta útil para estimar el consumo de oxígeno en función del tiempo"))
