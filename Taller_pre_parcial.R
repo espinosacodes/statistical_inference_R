@@ -1,3 +1,4 @@
+
 #Ejercicio 1
 
 
@@ -250,21 +251,46 @@ View(datos2)
 
 #a. Obtenga un diagrama de dispersión donde X: Numero de cajas  e Y: Tiempo de entrega (min).
 
+plot(datos2$numero_cajas, datos2$tiempo_entrega, main="Diagrama de dispersion", xlab="Numero de cajas", 
+     ylab="Tiempo de entrega")
+
+abline(lm(datos2$tiempo_entrega ~ datos2$numero_cajas), col="red")
+
 
 
 #b. Obtenga el modelo de regresión lineal estimado:  y ̂_i=b_0+b_1 x_i 
 
+modelo2 <- lm(datos2$tiempo_entrega ~ datos2$numero_cajas)
+modelo2$coefficients
+
+print(paste("Para Beta_1 se concluye que por cada caja que se entrega, el tiempo de entrega aumenta en 0.1 minutos", "Para Beta_0 se concluye que cuando el numero de cajas es 0
+            el tiempo de entrega seria de aproximadamente 30 minutos, lo que indica que esa es el tiempo de entrega cuando no se entrega ninguna caja"))
+
+#Verificar si es necesario usar esto en alguna parte del ejercicio
+summary(modelo2)
+
+
 
 #c. Interprete b_0 y b_1.
+
 
 #d. Pruebe que el modelo obtenido es lineal α=0.03.
 
 
 #e. Prediga el tiempo de entrega para 150 cajas de bebida refrescante. Dé los intervalos de predicción y confianza respectivos para un α=0.03.
 
+
+
+
 #f. Haga una interpretación del coeficiente de correlación para el modelo obtenido.
 
+
+
+
 #g. Pruebe que el coeficiente de correlación es diferente de cero. Use α=0.03.
+
+
+
 
 #h. Haga una interpretación del coeficiente determinación obtenido para el modelo.
 
