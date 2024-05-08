@@ -14,7 +14,7 @@ tiempo_segundos <- c(918, 805, 892, 962, 968, 907, 770, 743, 1045, 810, 927, 813
 volumen <- c(42.33, 53.10, 42.08, 50.06, 42.45, 42.46, 47.82, 49.92, 36.23, 49.66, 41.49, 46.17, 46.18, 43.21, 51.81, 53.28, 53.29, 47.18, 56.91, 47.80, 48.65, 53.67, 60.62, 56.73)
 
 #data frame de las dos variables
-datos <- data.frame(volumen, tiempo_segundos) #x and then y
+datos <- data.frame(volumen, tiempo_segundos) 
 View(datos)
 
 coeficiente_correlacion <- cor(datos$tiempo_segundos, datos$volumen)
@@ -223,3 +223,56 @@ print(predicciones)
 #j. Considera que el modelo sirve para estimar el consumo de oxígeno en los deportistas? Justifique su respuesta basada en los resultados obtenidos.
 
 print(paste("el modelo proporciona una herramienta útil para estimar el consumo de oxígeno en función del tiempo"))
+
+
+
+
+
+
+
+
+
+###############################################################################################################################################################
+
+#ejercicio 2
+
+
+# Datos de Tiempo (min) (Variable X)
+tiempo_entrega<- c(32.1,34.8,	36.2,	37.8,	39.7,	41.9,	47.1,	49.4,	56.8,	61.2,	63.1)
+
+# Datos de numero de cajas (Variable Y)
+numero_cajas <- c(52,	64,	73,	85,	103,	121,	157,	184,	218,	254,	275)
+
+#data frame de las dos variables
+datos2 <- data.frame(numero_cajas, tiempo_entrega) #x and then y
+View(datos2)
+
+
+#a. Obtenga un diagrama de dispersión donde X: Numero de cajas  e Y: Tiempo de entrega (min).
+
+
+
+#b. Obtenga el modelo de regresión lineal estimado:  y ̂_i=b_0+b_1 x_i 
+
+
+#c. Interprete b_0 y b_1.
+
+#d. Pruebe que el modelo obtenido es lineal α=0.03.
+
+
+#e. Prediga el tiempo de entrega para 150 cajas de bebida refrescante. Dé los intervalos de predicción y confianza respectivos para un α=0.03.
+
+#f. Haga una interpretación del coeficiente de correlación para el modelo obtenido.
+
+#g. Pruebe que el coeficiente de correlación es diferente de cero. Use α=0.03.
+
+#h. Haga una interpretación del coeficiente determinación obtenido para el modelo.
+
+#i. Obtenga el error estándar de estimación para el modelo.
+
+#j. Aplique las pruebas de normalidad e independencia para los residuos. Comente los resultados
+
+
+
+
+
