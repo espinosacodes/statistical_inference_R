@@ -116,6 +116,7 @@ print(paste("El valor del intercepto es menor al nivel de significancia tomado c
 #f. Plantee y desarrolle la prueba de hipótesis de linealidad del modelo.
 summary(modelo)
 anova(modelo)
+
 #TAREA: Interpretar correctamente la prueba de hipotesis
 # sobre la linealidad del modelo
 
@@ -207,19 +208,15 @@ bptest(modelo)
 #(Pista: Calcule intervalos de predicción para los valores estimados y observe si los valores observados están dentro de los intervalos de predicción)
 
 
+# Ensure 'modelo' object is correctly defined with 'datos2'
+modelo <- lm(tiempo_entrega ~ numero_cajas, data = datos2)
+
 # Your new data
-nuevos_datos <- data.frame(tiempo_segundos = c(750, 950, 1200))
+nuevos_datos <- data.frame(numero_cajas = c(750, 950, 1200))
 
 # Predictions from the model
 predicciones <- predict(modelo, newdata = nuevos_datos, interval = "prediction", level = 0.95)
-
-# Actual oxygen consumption values
-consumo_real <- c(43.5, 51.8, 27.5)
-
 print(predicciones)
-
-
-
 
 #______________________________________________________________________________________________________________________________________________________________
 #j. Considera que el modelo sirve para estimar el consumo de oxígeno en los deportistas? Justifique su respuesta basada en los resultados obtenidos.
@@ -387,6 +384,7 @@ if (!require(car)) {
 
 durbin_watson_test <- durbinWatsonTest(modelo)
 print(durbin_watson_test)
+
 
 
 
