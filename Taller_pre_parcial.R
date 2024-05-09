@@ -211,12 +211,13 @@ bptest(modelo)
 nuevos_datos <- data.frame(tiempo_segundos = c(750, 950, 1200))
 
 # Predictions from the model
-predicciones <- predict(modelo, newdata = nuevos_datos, interval = "prediction")
+predicciones <- predict(modelo, newdata = nuevos_datos, interval = "prediction", level = 0.95)
 
 # Actual oxygen consumption values
 consumo_real <- c(43.5, 51.8, 27.5)
 
 print(predicciones)
+
 
 
 
@@ -238,67 +239,154 @@ print(paste("el modelo proporciona una herramienta útil para estimar el consumo
 #ejercicio 2
 
 
-# Datos de Tiempo (min) (Variable X)
-tiempo_entrega<- c(32.1,34.8,	36.2,	37.8,	39.7,	41.9,	47.1,	49.4,	56.8,	61.2,	63.1)
 
-# Datos de numero de cajas (Variable Y)
+
+# Datos de numero de cajas (Variable x)
 numero_cajas <- c(52,	64,	73,	85,	103,	121,	157,	184,	218,	254,	275)
 
+# Datos de Tiempo (min) (Variable y)
+tiempo_entrega<- c(32.1,34.8,	36.2,	37.8,	39.7,	41.9,	47.1,	49.4,	56.8,	61.2,	63.1)
+                   
 #data frame de las dos variables
-datos2 <- data.frame(numero_cajas, tiempo_entrega) #x and then y
+datos2 <- data.frame(tiempo_entrega, numero_cajas) #x and then y
 View(datos2)
 
-
+#______________________________________________________________________________________________________________________________________________________________
 #a. Obtenga un diagrama de dispersión donde X: Numero de cajas  e Y: Tiempo de entrega (min).
 
-plot(datos2$numero_cajas, datos2$tiempo_entrega, main="Diagrama de dispersion", xlab="Numero de cajas", 
-     ylab="Tiempo de entrega")
+plot(numero_cajas, tiempo_entrega, main="Diagrama de dispersión", xlab="Número de cajas", ylab="Tiempo de entrega (min)")
+
 
 abline(lm(datos2$tiempo_entrega ~ datos2$numero_cajas), col="red")
 
 
-
+#______________________________________________________________________________________________________________________________________________________________
 #b. Obtenga el modelo de regresión lineal estimado:  y ̂_i=b_0+b_1 x_i 
 
-modelo2 <- lm(datos2$tiempo_entrega ~ datos2$numero_cajas)
-modelo2$coefficients
+# Modelo de regresión lineal
+modelo <- lm(tiempo_entrega ~ numero_cajas)
 
-print(paste("Para Beta_1 se concluye que por cada caja que se entrega, el tiempo de entrega aumenta en 0.1 minutos", "Para Beta_0 se concluye que cuando el numero de cajas es 0
-            el tiempo de entrega seria de aproximadamente 30 minutos, lo que indica que esa es el tiempo de entrega cuando no se entrega ninguna caja"))
+# Interceptar y pendiente
+b0 <- coef(modelo)[1]
+b1 <- coef(modelo)[2]
+
 
 #Verificar si es necesario usar esto en alguna parte del ejercicio
-summary(modelo2)
+summary(modelo)
 
 
-
+#______________________________________________________________________________________________________________________________________________________________
 #c. Interprete b_0 y b_1.
 
 
+# Interpretación de b0 y b1
+interpretacion <- paste("b0 (intercepto) representa el tiempo de entrega cuando el número de cajas es 0. En este contexto, no tiene un significado real.",
+                        "b1 (pendiente) representa el cambio esperado en el tiempo de entrega por cada unidad adicional en el número de cajas.",
+                        "Es decir, por cada caja adicional, se espera un cambio de", round(b1, 3), "minutos en el tiempo de entrega.")
+
+# Imprimir e interpretar los coeficientes
+cat("Intercepto (b0):", b0, "\n")
+cat("Pendiente (b1):", b1, "\n")
+
+print(interpretacion)
+
+
+#______________________________________________________________________________________________________________________________________________________________
 #d. Pruebe que el modelo obtenido es lineal α=0.03.
 
+# Instalar y cargar el paquete gvlma si aún no está instalado
+if (!require(gvlma)) {
+  install.packages("gvlma")
+  library(gvlma)
+}
 
+# Realizar la prueba de linealidad
+resultado_gvlma <- gvlma(modelo)
+
+# Imprimir los resultados de la prueba de linealidad
+print(summary(resultado_gvlma)$tests[2,])
+
+# Calcular el valor p asociado a la pendiente
+p_valor_pendiente <- summary(modelo)$coefficients[2, 4]
+
+# Nivel de significancia
+alpha <- 0.03
+
+# Prueba de hipótesis
+if (p_valor_pendiente < alpha) {
+  print("No se acepta la hipótesis nula. El modelo es lineal.")
+} else {
+  print("se acepta la hipótesis nula. No hay suficiente evidencia para afirmar que el modelo es lineal.")
+}
+
+#______________________________________________________________________________________________________________________________________________________________
 #e. Prediga el tiempo de entrega para 150 cajas de bebida refrescante. Dé los intervalos de predicción y confianza respectivos para un α=0.03.
 
+# Nuevos datos
+nuevos_datos <- data.frame(numero_cajas = 150)
 
+# Predicción del tiempo de entrega
+prediccion <- predict(modelo, newdata = nuevos_datos, interval = "prediction", level = 0.97)
+print(prediccion)
 
-
+#______________________________________________________________________________________________________________________________________________________________
 #f. Haga una interpretación del coeficiente de correlación para el modelo obtenido.
 
+coeficiente_correlacion <- abs(coeficiente_correlacion)
+
+# Evaluamos el valor absoluto del coeficiente de correlación para determinar la fuerza de la relación lineal
+if (coeficiente_correlacion > 0.7) {
+  print("Hay una buena relación lineal")
+} else if (coeficiente_correlacion > 0.4) {
+  print("Hay cierta relación")
+} else {
+  print("No hay relación")
+}
 
 
-
+#______________________________________________________________________________________________________________________________________________________________
 #g. Pruebe que el coeficiente de correlación es diferente de cero. Use α=0.03.
 
+cor_test <- cor.test(datos2$numero_cajas, datos2$tiempo_entrega)
+print(paste("Valor p de la prueba de correlación: ", cor_test$p.value))
+if (cor_test$p.value < 0.03) {
+  print("El coeficiente de correlación es significativamente diferente de cero.")
+} else {
+  print("El coeficiente de correlación no es significativamente diferente de cero.")
+}
 
 
 
+#______________________________________________________________________________________________________________________________________________________________
 #h. Haga una interpretación del coeficiente determinación obtenido para el modelo.
 
+modelo <- lm(tiempo_entrega ~ numero_cajas, data = datos2)
+print(paste("Coeficiente de determinación (R²): ", summary(modelo)$r.squared))
+
+
+
+#______________________________________________________________________________________________________________________________________________________________
 #i. Obtenga el error estándar de estimación para el modelo.
 
+error_estandar_estimacion <- summary(modelo)$sigma
+print(paste("Error estándar de estimación: ", error_estandar_estimacion))
+
+#______________________________________________________________________________________________________________________________________________________________
 #j. Aplique las pruebas de normalidad e independencia para los residuos. Comente los resultados
+residuos <- residuals(modelo)
+# Prueba de normalidad
+shapiro_test <- shapiro.test(residuos)
+print(paste("Valor p de la prueba de Shapiro-Wilk para normalidad de los residuos: ", shapiro_test$p.value))
+# Prueba de independencia
 
+# Load the required package 'car'
+if (!require(car)) {
+  install.packages("car")
+  library(car)
+}
 
+durbin_watson_test <- durbinWatsonTest(modelo)
+print(durbin_watson_test)
 
 
 
