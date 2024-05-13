@@ -174,7 +174,7 @@ print("sí existe una diferencia significativa en el tiempo promedio de falla en
 tiempo_promedio_falla <- colMeans(datos, na.rm = TRUE)
 
 # Order the machines by mean time until failure
-ordenado <- sort(tiempo_promedio_falla)
+ordenado <- sort(tiempo_promedio_falla) 
 
 # Identify the machine with the highest mean time until failure
 mejor_maquina <- names(ordenado)[length(ordenado)]
