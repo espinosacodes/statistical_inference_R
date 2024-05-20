@@ -13,6 +13,8 @@ variable_de_respuesta <- mean(tabla_de_puntajes$tecnica_1)
 
 #b. A un nivel de significancia del 5%, se puede asegurar que hay diferencia en las notas promedio de las diferentes técnicas? Plantee, desarrolle e interprete adecuadamente la hipótesis.
 
+
 #c. Cual o cuales rutas de bus considera que son las mejores técnicas? Plantee, desarrolle e interprete adecuadamente las hipótesis. 
 
 #d. Desarrolle las pruebas de supuestos del modelo. Plantee, desarrolle e interprete adecuadamente las hipótesis.
+
