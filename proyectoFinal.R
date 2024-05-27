@@ -221,69 +221,60 @@ library(ggplot2)
 
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-
-
-
-# Obtener la columna de notas uso de IA's
+# Cálculos para las notas haciendo uso de IA's
 notasUsoIa <- respuestas[[6]]
-
-# Convertir la columna de notas a tipo numérico
 notasUsoIa <- as.numeric(as.character(notasUsoIa))
+promedio_ia <- mean(notasUsoIa, na.rm = TRUE)
+desviacion_ia <- sd(notasUsoIa, na.rm = TRUE)
 
-# Calcular el promedio y la desviación estándar
-promedio <- mean(notasUsoIa, na.rm = TRUE)
-desviacion_estandar <- sd(notasUsoIa, na.rm = TRUE)
+# Cálculos para las notas sin uso de IA's
+notasSinIa <- respuestas[[10]]
+notasSinIa <- as.numeric(as.character(notasSinIa))
+promedio_sin_ia <- mean(notasSinIa, na.rm = TRUE)
+desviacion_sin_ia <- sd(notasSinIa, na.rm = TRUE)
 
 # Imprimir los resultados
-print(paste("Promedio materia en que mas se usa IA's:", promedio))
-print(paste("Desviación Estándar materia en que mas se usa IA's:", desviacion_estandar))
+print(paste("Promedio de notas haciendo uso de IA's:", promedio_ia))
+print(paste("Desviación estándar de las notas haciendo uso de IA's:", desviacion_ia))
+
+print(paste("Promedio de notas sin uso de IA's:", promedio_sin_ia))
+print(paste("Desviación estándar de las notas sin uso de IA's:", desviacion_sin_ia))
 
 
-# Obtener la columna de notas sin uso de IA's
-notasUsoIa <- respuestas[[9]]
 
-# Convertir la columna de notas finales a tipo numérico
+
+
+print("H0: No hay diferencia en las medias de las notas entre los grupos con y sin uso de IA’s.")
+print("H1: Existe una diferencia significativa en las medias de las notas entre los grupos con y sin uso de IA’s.")
+
+# Cálculos para las notas haciendo uso de IA's
+notasUsoIa <- respuestas[[6]]
 notasUsoIa <- as.numeric(as.character(notasUsoIa))
 
-# Calcular el promedio y la desviación estándar
-promedio <- mean(notasUsoIa, na.rm = TRUE)
-desviacion_estandar <- sd(notasUsoIa, na.rm = TRUE)
+# Cálculos para las notas sin uso de IA's
+notasSinIa <- respuestas[[10]]
+notasSinIa <- as.numeric(as.character(notasSinIa))
+
+# Realizar el ANOVA
+resultado_anova <- aov(notasUsoIa ~ notasSinIa)
 
 # Imprimir los resultados
-print(paste("Promedio de la materia Sin IA's:", promedio))
-print(paste("Desviación Estándar de la materia Sin IA's:", desviacion_estandar))
+summary(resultado_anova)
+
+print(paste("Se rechaza la hipótesis nula (H0)"))
+print("quedandonos asi:")
+print("Existe una diferencia significativa en las medias de las notas entre los grupos con y sin uso de IA’s")
 
 
 
 
 
-# Obtener la columna de notas finales en la materia con más uso de IA's
-notasUsoIa <- respuestas[[10]]
-
-# Convertir la columna de notas finales a tipo numérico
-notasUsoIa <- as.numeric(as.character(notasUsoIa))
-
-# Calcular el promedio y la desviación estándar
-promedio <- mean(notasUsoIa, na.rm = TRUE)
-desviacion_estandar <- sd(notasUsoIa, na.rm = TRUE)
-
-# Imprimir los resultados
-print(paste("Promedio de horas de estudio con IA's:", promedio))
-print(paste("Desviación Estándar de horas de estudio con IA's:", desviacion_estandar))
 
 
 
-# Obtener la columna de notas finales en la materia con más uso de IA's
-notasUsoIa <- respuestas[[11]]
 
-# Convertir la columna de notas finales a tipo numérico
-notasUsoIa <- as.numeric(as.character(notasUsoIa))
 
-# Calcular el promedio y la desviación estándar
-promedio <- mean(notasUsoIa, na.rm = TRUE)
-desviacion_estandar <- sd(notasUsoIa, na.rm = TRUE)
 
-# Imprimir los resultados
-print(paste("Promedio de horas de estudio sin IA's:", promedio))
-print(paste("Desviación Estándar de horas de estudio sin IA's:", desviacion_estandar))
+
+
 
