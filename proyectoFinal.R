@@ -222,51 +222,32 @@ library(ggplot2)
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
-# Obtener la columna de cantidad de materias uso de IA's
-a <- respuestas[[12]]
-
-# Crear un dataframe con el conteo de cada cantidad de materias
-conteo_a <- table(a)
-
-# Convertir a dataframe
-conteo_a_df <- as.data.frame(conteo_a)
-colnames(conteo_a_df) <- c("Cantidad de Materias", "Frecuencia")
-
-# Ordenar el dataframe por la cantidad de materias
-conteo_a_df <- conteo_a_df[order(conteo_a_df$`Cantidad de Materias`), ]
-
-# Crear el diagrama de barras
-ggplot(conteo_a_df, aes(x = factor(`Cantidad de Materias`), y = Frecuencia)) +
-  geom_bar(stat = "identity", fill = "skyblue", color = "black") +
-  labs(title = "Cantidad de Materias en las que se Utiliza IA's", x = "Cantidad de Materias", y = "Frecuencia") +
-  theme_minimal()
 
 
+# Obtener la columna de notas uso de IA's
+notasUsoIa <- respuestas[[6]]
 
-# Obtener la columna de notas finales en la materia con más uso de IA's
-notas_finalCHAT <- respuestas[[8]]
-
-# Convertir la columna de notas finales a tipo numérico
-notas_finalCHAT <- as.numeric(as.character(notas_finalCHAT))
+# Convertir la columna de notas a tipo numérico
+notasUsoIa <- as.numeric(as.character(notasUsoIa))
 
 # Calcular el promedio y la desviación estándar
-promedio <- mean(notas_finalCHAT, na.rm = TRUE)
-desviacion_estandar <- sd(notas_finalCHAT, na.rm = TRUE)
+promedio <- mean(notasUsoIa, na.rm = TRUE)
+desviacion_estandar <- sd(notasUsoIa, na.rm = TRUE)
 
 # Imprimir los resultados
 print(paste("Promedio materia en que mas se usa IA's:", promedio))
 print(paste("Desviación Estándar materia en que mas se usa IA's:", desviacion_estandar))
 
 
-# Obtener la columna de notas finales en la materia con más uso de IA's
-notas_finalCHAT <- respuestas[[9]]
+# Obtener la columna de notas sin uso de IA's
+notasUsoIa <- respuestas[[9]]
 
 # Convertir la columna de notas finales a tipo numérico
-notas_finalCHAT <- as.numeric(as.character(notas_finalCHAT))
+notasUsoIa <- as.numeric(as.character(notasUsoIa))
 
 # Calcular el promedio y la desviación estándar
-promedio <- mean(notas_finalCHAT, na.rm = TRUE)
-desviacion_estandar <- sd(notas_finalCHAT, na.rm = TRUE)
+promedio <- mean(notasUsoIa, na.rm = TRUE)
+desviacion_estandar <- sd(notasUsoIa, na.rm = TRUE)
 
 # Imprimir los resultados
 print(paste("Promedio de la materia Sin IA's:", promedio))
@@ -277,14 +258,14 @@ print(paste("Desviación Estándar de la materia Sin IA's:", desviacion_estandar
 
 
 # Obtener la columna de notas finales en la materia con más uso de IA's
-notas_finalCHAT <- respuestas[[10]]
+notasUsoIa <- respuestas[[10]]
 
 # Convertir la columna de notas finales a tipo numérico
-notas_finalCHAT <- as.numeric(as.character(notas_finalCHAT))
+notasUsoIa <- as.numeric(as.character(notasUsoIa))
 
 # Calcular el promedio y la desviación estándar
-promedio <- mean(notas_finalCHAT, na.rm = TRUE)
-desviacion_estandar <- sd(notas_finalCHAT, na.rm = TRUE)
+promedio <- mean(notasUsoIa, na.rm = TRUE)
+desviacion_estandar <- sd(notasUsoIa, na.rm = TRUE)
 
 # Imprimir los resultados
 print(paste("Promedio de horas de estudio con IA's:", promedio))
@@ -293,14 +274,14 @@ print(paste("Desviación Estándar de horas de estudio con IA's:", desviacion_es
 
 
 # Obtener la columna de notas finales en la materia con más uso de IA's
-notas_finalCHAT <- respuestas[[11]]
+notasUsoIa <- respuestas[[11]]
 
 # Convertir la columna de notas finales a tipo numérico
-notas_finalCHAT <- as.numeric(as.character(notas_finalCHAT))
+notasUsoIa <- as.numeric(as.character(notasUsoIa))
 
 # Calcular el promedio y la desviación estándar
-promedio <- mean(notas_finalCHAT, na.rm = TRUE)
-desviacion_estandar <- sd(notas_finalCHAT, na.rm = TRUE)
+promedio <- mean(notasUsoIa, na.rm = TRUE)
+desviacion_estandar <- sd(notasUsoIa, na.rm = TRUE)
 
 # Imprimir los resultados
 print(paste("Promedio de horas de estudio sin IA's:", promedio))
