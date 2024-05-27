@@ -268,6 +268,45 @@ print("Existe una diferencia significativa en las medias de las notas entre los 
 
 
 
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------
+satisfaccion <- respuestas[[7]]
+
+print("Hipótesis nula (H0): Los estudiantes no están satisfechos con el rendimiento académico logrado mediante el uso de IA.")
+print("Hipótesis alternativa (H1): Los estudiantes están satisfechos con el rendimiento académico logrado mediante el uso de IA.")
+
+
+# Datos de ejemplo (reemplaza con tus propios datos)
+satisfaction <- c("Satisfecho 😊", "Muy satisfecho 🥵", "Neutral 😐")
+grupo_ia <- satisfaction[satisfaction %in% c("Satisfecho 😊", "Muy satisfecho 🥵")]
+grupo_no_ia <- satisfaction[satisfaction == "Neutral 😐"]
+
+# Asignamos valores numéricos a las categorías
+# Por ejemplo: "Satisfecho 😊" = 2, "Muy satisfecho 🥵" = 3, "Neutral 😐" = 1
+satisfaction_numeric <- ifelse(grupo_ia == "Satisfecho 😊", 2,
+                               ifelse(grupo_ia == "Muy satisfecho 🥵", 3, 1))
+
+# Realizamos una prueba t de dos muestras
+t_test_result <- t.test(satisfaction_numeric, grupo_no_ia)
+
+# Imprimimos los resultados
+cat("Resultado de la prueba t:\n")
+cat("Estadístico t:", t_test_result$statistic, "\n")
+cat("Valor p:", t_test_result$p.value, "\n")
+
+# Comparamos el valor p con un umbral (por ejemplo, 0.05) para determinar si rechazamos la hipótesis nula
+alpha <- 0.05
+if (t_test_result$p.value < alpha) {
+  cat("Conclusión: Rechazamos la hipótesis nula. Hay evidencia suficiente para afirmar que hay una diferencia significativa en la satisfacción entre los grupos que utilizan IA y los que no.\n")
+} else {
+  cat("Conclusión: No rechazamos la hipótesis nula. No hay suficiente evidencia para afirmar que hay una diferencia significativa en la satisfacción entre los grupos.\n")
+}
+
+
+
+
+
+
+
 
 
 
